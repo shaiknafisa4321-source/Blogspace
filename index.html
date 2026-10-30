@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Welcome to BlogSpace</h1>
+<p>Read, write and share your thoughts with the world.</p>
+{% for post in posts %}
+<div class="blog-card">
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.content[:150] }}...</p>
+    <small>Written by {{ post.username }}</small>
+    <br><br>
+    <a href="/post/{{ post.id }}">Read More</a>
+    {% if session.get('user_id') == post.user_id %}
+        <a href="/edit/{{ post.id }}">Edit</a>
+        <form action="/delete/{{ post.id }}"
+              method="POST"
+              style="display:inline">
+            <button type="submit">Delete</button>
+        </form>
+    {% endif %}
+</div>
+{% else %}
+<p>No blogs available. Be the first to publish!</p>
+{% endfor %}
+{% endblock %}

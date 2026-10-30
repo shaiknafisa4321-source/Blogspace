@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="blog-card">
+    <h1>{{ blog.title }}</h1>
+    <p>{{ blog.content }}</p>
+    <small>Written by {{ blog.username }}</small>
+</div>
+<hr>
+<h2>Comments</h2>
+{% if session.get('user_id') %}
+<form method="POST">
+    <textarea name="comment"
+              placeholder="Write a comment..."
+              required></textarea>
+    <button type="submit">Post Comment</button>
+</form>
+{% else %}
+<p>Please <a href="/login">login</a> to comment.</p>
+{% endif %}
+{% for comment in comments %}
+<div class="comment">
+    <strong>{{ comment.username }}</strong>
+    <p>{{ comment.comment }}</p>
+</div>
+{% else %}
+<p>No comments yet. Start the conversation!</p>
+{% endfor %}
+<a href="/">Back to Home</a>
+{% endblock %}
